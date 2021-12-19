@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source /data/backup/script/send_email.sh
+
+PGDUMP=/usr/edb/as11/bin/psql
+PORT=5432
+BACKUP_LOCATION=/data/backup//script
+LOGFILE=$BACKUP_LOCATION/vacuum_analyze_reindex.log
+DB_NAME=test
+BACKUP_USER=enterprisedb
+BACKUP_PASS='xxxxx'
+FILE_NAME1="/data/backup/script/vacumm_tables.sql"
+FILE_NAME2="/data/backup/script/reindex_tables.sql"
+
+# FOR VACCUM & ANALYZE
+echo "$(date) : VACUUM IS STARTED ****************************" >> $LOGFILE;
+PGPASSWORD=$BACKUP_PASS $PGDUMP --host localhost --port $PORT  -U $BACKUP_USER -d $DB_NAME -a -f $FILE_NAME1 2>&1 >> $LOGFILE
+echo "$(date) : VACUUM IS FINISHED **************************" >> $LOGFILE;
+
+# FOR REINDEX
+#echo "$(date) : REINDEX IS STARTED ****************************" >> $LOGFILE;
+#PGPASSWORD=$BACKUP_PASS $PGDUMP --host localhost --port $PORT  -U $BACKUP_USER -d $DB_NAME -a -f $FILE_NAME2 2>&1 >> $LOGFILE
+#echo "$(date) : REINDEX IS FINISHED **************************" >> $LOGFILE;
+
+# SEND EMAIL
+SUBJECT="BRAC-ERP LIVE: DATABASE MAINTENANCE JOB";
+BODY="Dear Team,\n ERP database maintenance job has been completed. You can proceed with further tasks.";
+send_email $SUBJECT $BODY;
+
+exit
