@@ -1,0 +1,3 @@
+VACUUM(FULL, ANALYZE) test;
+VACUUM(ANALYZE) test1;
+
