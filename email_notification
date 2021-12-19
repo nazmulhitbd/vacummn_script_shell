@@ -1,0 +1,11 @@
+#!/bin/bash
+source /data/backup/script/send_email.sh
+
+BACKUP_LOCATION=/data/backup/script
+LOGFILE=$BACKUP_LOCATION/test.log
+# SEND EMAIL
+SUBJECT="ERP LIVE: DATABASE MAINTENANCE JOB";
+BODY="Dear Team,\n ERP database maintenance job has been completed. You can proceed with further tasks.";
+send_email $SUBJECT $BODY;
+
+exit
