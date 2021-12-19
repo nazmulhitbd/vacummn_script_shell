@@ -1,0 +1,19 @@
+#!/bin/bash
+# Send Email using this function
+send_email()
+{
+
+#SUBJECT=$1;
+#MESSAGE=$2;
+
+SUBJECT="ERP LIVE: DATABASE MAINTENANCE JOB";
+MESSAGE="Dear Team,\n\nERP database maintenance job has been completed. You can proceed with further tasks.\n\nRegards,\nDBA TEAM"
+
+EMAILS="nazmulitbd@gmail.com"
+SENDER="nazmulitbd@yahoo.com"
+
+for EMAIL in $(echo $EMAILS | tr "," " "); do
+     echo -e "$MESSAGE" | mail -s "$SUBJECT" -S smtp=smtp://10.10.10.1:5471 -r $SENDER  $EMAIL
+     echo "Alert sent to $EMAIL"
+done
+}
